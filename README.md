@@ -22,7 +22,11 @@ This repo contains general notes, exercises and projects written in Python.
 
 9. [Threading and Concurrency](#threading-and-concurrency)
 
-11. [Projects](#projects)
+10. [Solving Problems](#solving-problems)
+
+11. [Software Development Principles](#software-development-principles)
+
+12. [Projects](#projects)
 
 ### Basics
 
@@ -257,7 +261,69 @@ Tuple items are ordered, **unchangeable** (immutable, so you cannot even append 
 tuple = ("apple", "banana", "cherry", "apple", "cherry")
 ```
 
+##### Sets
+
+A set is a collection which is*unordered, unchangeable, and **unindexed**.
+
+```
+set = {'apple', 'banana', 'cherry}
+```
+
 #### Implementing Data Structures
+
+A data structure is just an object where we store and organise data, and each type has its own characteristics and purpose.
+
+##### Arrays (Lists)
+
+- Lookup - O(1)
+- Push (Append) - O(1)
+- Insert - O(n)
+- Delete - O(n)
+
+##### Hash Tables (Dictionaries)
+
+Hash tables are great for accessing data quick and efficiently. This is because each piece of data is assigned to a unique key, and we can instantly access the data if we know the key. 
+
+So, say we create a key called 'grapes', this gets sent into a **hash function** (cryptography - take inputs of variable lengths to return outputs of a fixed length, the output is the crypto key or secret that hides the data) and the hash is mapped to a memory address where the data is stored. In other words the hash value generated is the memory location where the record is stored. This adds a layer of protection because it makes it impractical to reverse the hash back into the original key.
+
+- Lookup - O(1)
+- Push (Append) - O(1)
+- Insert - O(1)
+- Delete - O(1)
+
+From the above, it seems like hash tables should be used all the time, but, there is an issue called **collisions** that we need to remember. A hash collision occurs when a hash algorithm produces the same hash value for two different input values.
+
+For instance, say we use a person's name as the key and their phone number as the value. The phone number would get stored in a memory bucket/slot. Now, in a scenario where we have many records of people's phone numbers, eventually we would run into a scenario where the hash funtion will produce the same hash value for two or more people. Due to this collision, these records with the same hash value will essentially get stored in a **linked list** in memory (just one of the solutions), since you cannot store the record in the same memory slot. Therefore, this significantly slows down our ability to access information and the time complexity will become **O(n)**.
+
+Every hash function will eventually result in collision because there are a finite number of possible address values that can be created from a hash value through modulo. The longer the hash value, the less chance of a collision. For example:
+
+*Consider a really stupid hash function: A number modulo 31. In other words, the remainder when you divide the number by 31. 1 modulo 31 is 1. 35 modulo 31 is 4. And so on. It’s pretty obvious that 32 mod 31 is 1, and 63 modulo 31 is 1… and that’s a hash collision. And it happens pretty often for random numbers - 1 try in 31. And it’s trivial to make it happen on demand - knowing that some other number is 5 modulo 31, it’s pretty easy to find another number that’s also 5 modulo 31. This is obviously too weak for cryptography, but if you’re just implementing a hash function for storage it may be good enough to split a single long linked list into 31 shorter lists.
+
+Now, any given hash function *will* have potential collisions. Consider a hash function that outputs a 16-bit binary number. This can have one of 65,536 possible values. So it’s possible that you can hash 65,536 different inputs and (potentially) get back that many outputs. But the 65,537th input *has* to hash to the same thing as one of the first 65,536 inputs.*
+
+Good explanations can be found here: 
+
+https://stackoverflow.com/questions/730620/how-does-a-hash-table-work
+
+https://www.quora.com/Why-do-collisions-occur-in-hashing
+
+###### Static vs Dynamic Arrays
+
+**Static**
+
+Static arrays are fixed in size, so the user would need to specify the number of elements the array will hold before instantiation.
+
+**Dynamic**
+
+Dynamic arrays are the most commonly used as they are flexible. When an array is resized, the following process is executed:
+
+1. An initial array of 4 elements is created.
+
+2. Machine receives instructions to add a fifth element.
+
+3. Machine loops over each element, and copies and moves them to another set of free memory slots. It usually doubles 
+the amount of slots, so in this case 8 free slots are assigned for the array object.
+
 
 ### Big-O
 
@@ -300,11 +366,17 @@ O(x^2)
 ##### Big-O Types
 
 - O(1) - constant time, i.e. input does not affect complexity.
+
 - O(log n) - logarithmic time. Usually searching algorithms have log n if they are sorted (binary search).
+
 - O(n) - linear time.
+
 - O(n log(n)) - log linear time. Usually for sorting operations.
+
 - O(n^2) - quadratic time (nested loops). **Note!** For the huge majority of cases, if you have three nested loops, you usually are doing something wrong. So O(n^3) should be an extreme rarity.
+
 - O(2^n) - exponential time. Recursive algorithms that solves a problem of size n.
+
 - O(n!) - factorial time. If your code has this Big-O, then you are almost certainly doing something wrong. What this basically means is that you have a nested loop for every input element have!
 
 #### Space Complexity
@@ -320,9 +392,25 @@ Like, time complexity, we use big-o to assess how much the amount of memory requ
 
 ### Memory
 
+A machine can simply be broken down into three parts:
+
+- CPU (Central Processing Unit) - runs the actual processes of the machine.
+
+The CPU is connected to the RAM through what is called a **memory controller**, which carries out the actual reading and writing of data in the RAM.
+
+It also has an extremely tiny space of memory where it stores data that has been used very recently. This is what we all the **cache**.
+
+- RAM (Random Access Memory) - you lose the memory when the machine turns off. So why do we need the RAM if we lose our data? Storage is slow, i.e. the CPU can access data from the RAM much faster than storage.
+
+For example, say we have Google Chrome installed on our machine. It obviously consists of thousands of lines of code (which are stored in storage). The CPU will execute the browser when the user commands it to, and any data that is part of the scripts involved in running the various processes of the browser (when in use) will be temporarily stored in the RAM and deleted when the browser is closed.
+
+Now, the RAM consists of shelves, with each shelf having an address - which is bascially a number, kind of like an ID, and each shelf can store 8-bits (0 or 1) or byte of data. The memory controller has connections to each of these shelves through the address, therefore, it can access the required memory instantly without having to go through each one.
+
+- Storage - also called **permanent** or **persistent** because the objects that are stored here must be deleted manually. So software, photos, videos, documents etc are stored in persistent storage.
+
 #### How is Memory Divided?
 
-Memory is divided into multiple segments. Two of the most important ones are the:
+Memory (RAM) is divided into multiple segments. Two of the most important ones are the:
 
 - Stack
 - Heap
@@ -361,10 +449,74 @@ The size of a call stack depends on various factors. It is usually defined at th
 
 ### Threading and Concurrency
 
+### Solving Problems
+
+#### General Steps
+
+1. Verify the constraints of the problem
+
+2. Write test cases
+
+### Software Development Principles
+
+#### Object-Oriented Programming (OOP)
+
+##### Creating a Class/Object in Python
+
+###### Constructors
+
+Constructors are the first function that gets called when an object is instantiated. The task of constructors is to **initialise(assign instance attribute values)** to the **instance attributes** of the class when an object of the class is created. A **class attribute** is a variable that is defined within the class and not the constructor, i.e. it is defined before instantiation and is thus shared across all instantiations of the class. There are two important rules to remember when it comes to class attributes:
+
+1. Class attributes can be accessed using the class name as well as well as the object (instantiation) name with dot notation, e.g. classname.class_attribute or object.class_attribute.
+
+2. Changing value by using classname.class_attribute = value will be reflected to all the objects.
+
+In Python the __init__() method is called the constructor and is always called when an object is created:
+
+```
+class myClass:
+
+    count = 0 # Class attribute
+
+    def __init__(self, name, age): 
+            self.name = name # Instance attribute
+            self.age = age # Instance attribute
+```
+
+The **self** keyword is used to represent an instance (object) of the given class. It basically is a reference pointer to the current instantiation, so we need to use this keyword everytime we define a function that is unique to the object and not the class:
+
+```
+class myClass:
+
+    count = 0 # Class attribute
+
+    def __init__(self, name, age): 
+            self.name = name # Instance attribute
+
+    def say_phrase(self, phrase):
+        print(self.name + ' says' + phrase)
+
+```  
+
+#### Parent and Child Objects
+
+In OOP, a parent is one class, and a child is another class that inherits all of the attributes and functions assigned to the parent class.
+
 ### Projects
 
-#### 1. TextPro_App
+#### 1. TextPro App
 
 A very simple console app that asks the user for a phrase and then concatenates each phrase.
 
-#### 2. 
+#### 2. Population and Volcano Interactive Web Map App
+
+A simple interactive web map that consists of three layers:
+
+- World map
+- Population polygons
+- US volcano markers
+
+This project has been built using the **Folium** library. Python Folium allows us to combine data and Python programming with **Leaflet.js** (an open source JavaScript library used to build web mapping applications.) to build powerful, interactive web maps. 
+
+
+

@@ -123,8 +123,8 @@ def log_all_pairs(boxes):
 
 log_all_pairs(boxes)
 
-# Answer: O(n^2)
+# Answer: O(n^3)
 # This is because we have nested for loops. The first for loop goes through every input,
 # and then for each input the second for loop will carry out further operations. So, if there
 # is an operation that executes linearly with the input in the second for loop, then the time
-# complexity is O(n * n), i.e. O(n^2).
+# complexity is O(n * n), i.e. O(n^2) or in this case O(n^3).
