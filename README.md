@@ -1,4 +1,4 @@
-# Python_100_Days_Of_Code
+# Learning_Python
 
 This repo contains general notes, exercises and projects written in Python.
 
@@ -457,30 +457,119 @@ The size of a call stack depends on various factors. It is usually defined at th
 
 2. Write test cases
 
+#### Techniques
+
+##### Two Pointer Technique
+
+Two pointers is really an easy and effective technique that is typically used for searching pairs in a sorted array.
+Given a sorted (ascending) array, A, having n integers, find if there exists any pair of elements (A[i], A[j]) such that their sum is equal to X.
+
+The algorithm basically uses the fact that the input array is sorted. We take two pointers, one representing the first element and other representing the last element of the array, and then we add the values kept at both the pointers. If their sum is smaller than X then we shift the left pointer to right or if their sum is greater than X then we shift the right pointer to left, in order to get closer to the sum. We keep moving the pointers until we get the sum as X.
+
+##### Window Sliding Technique
+
+This technique shows how a nested for loop in some problems can be converted to a single for loop to reduce the time complexity. It essentially eliminates duplicate work, for instance if we were to loop through each element and then for each element loop through every other element, i.e. O(n^2), there are many cases where this would be unnecessary and we could optimise the solution to skip through element combinations we have already assessed.
+
+
+
+
+
 ### Software Development Principles
 
 #### Object-Oriented Programming (OOP)
 
-##### Creating a Class/Object in Python
+OOP is used to structure a software program into simple, reusable pieces of code blueprints called **classes**, which are used to create individual instances of objects.
 
-###### Constructors
+A class is just a blueprint used to categorise/classify a set of objects. For instance, we may have classes for Cars or Pets that share **attributes**. These classes define what attributes an instance of this type will have, like brand or breed, but not the value of those attributes for a specific object.
 
-Constructors are the first function that gets called when an object is instantiated. The task of constructors is to **initialise(assign instance attribute values)** to the **instance attributes** of the class when an object of the class is created. A **class attribute** is a variable that is defined within the class and not the constructor, i.e. it is defined before instantiation and is thus shared across all instantiations of the class. There are two important rules to remember when it comes to class attributes:
+#### OOP Concepts
+
+##### Inheritance
+
+Inheritance is the procedure in which one class inherits the attributes and methods of another class.  The class whose properties and methods are inherited is known as **Parent** class. And the class that inherits the properties from the parent class is the **Child** class.
+
+The interesting thing is, along with the inherited properties and methods, a child class can have its own properties and methods.
+
+```
+# Parent class
+class Bird:
+
+    def __init__(self):
+        print("Bird is ready")
+
+    def whoisThis(self):
+        print("Bird")
+
+    def swim(self):
+        print("Swim faster")
+
+# Child class
+class Penguin(Bird):
+
+    def __init__(self):
+        # Call the __init__() function of the parent class using the super() function
+        super().__init__()
+        print("Penguin is ready")
+
+    def whoisThis(self):
+        print("Penguin")
+
+    def run(self):
+        print("Run faster")
+
+peggy = Penguin() # Outputs 'Bird is ready' and then 'Penguin is ready'
+peggy.whoisThis() # Outputs 'Penguin'
+peggy.swim() # Outputs 'Swim faster'
+peggy.run() # Outputs 'Run faster'
+```
+
+In the above code, we created two classes i.e. Bird (parent class) and Penguin (child class). The Penguin class inherits the functions of the Bird class, as we can see from the swim() method.
+
+We can also see that the child class is able to modify the behavior of the parent class. For example, we redefined the  whoisThis() method to return 'Penguin' instead of 'Bird'. 
+
+Furthermore, we extend the functions of the parent class, by creating a new run() method in the child class.
+
+Additionally, we use the **super()** function inside the __init__() method. This allows us to run the __init__() method of the parent class inside the child class. A parent class can be referred to with the use of the super() function. The super function returns a temporary object of the parent class that allows access to all of its methods to its child class.
+
+The benefits of using a super function are: 
+
+- Need not remember or specify the parent class name to access its methods. This function can be used both in single and multiple inheritances.
+- This implements modularity (isolating changes) and code reusability as there is no need to rewrite the entire function.
+- Super function in Python is called dynamically because Python is a dynamic language unlike other languages.
+
+###### Multiple Inheritance
+
+class Base1:
+    pass
+
+class Base2:
+    pass
+
+class MultiDerived(Base1, Base2):
+    pass
+
+#### Creating a Class/Object in Python
+
+##### Constructors
+
+Constructors are the first function that gets called when an object is instantiated. The task of constructors is to **initialise (assign instance attribute values)** to the **instance attributes/variables** of the class when an object of the class is created. 
+
+A **class attribute/variable** is a variable that is defined within the class and not the constructor, i.e. it is defined before instantiation and is thus shared across all instantiations of the class. There are two important rules to remember when it comes to class attributes:
 
 1. Class attributes can be accessed using the class name as well as well as the object (instantiation) name with dot notation, e.g. classname.class_attribute or object.class_attribute.
 
 2. Changing value by using classname.class_attribute = value will be reflected to all the objects.
 
-In Python the __init__() method is called the constructor and is always called when an object is created:
+In Python the **__init__()** method is called the constructor and is always called when an object is created:
 
 ```
 class myClass:
 
-    count = 0 # Class attribute
+    count = 0 # Class attribute/variable
 
     def __init__(self, name, age): 
-            self.name = name # Instance attribute
-            self.age = age # Instance attribute
+            self.name = name # Instance attribute/variable
+            self.age = age # Instance attribute/variable
 ```
 
 The **self** keyword is used to represent an instance (object) of the given class. It basically is a reference pointer to the current instantiation, so we need to use this keyword everytime we define a function that is unique to the object and not the class:
