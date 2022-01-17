@@ -1,0 +1,37 @@
+# A block defined with a class name inside the < and > characters is a Widget rule. It will be applied to any 
+# instance of the named class. If you replaced PongGame with Widget in our example, all Widget instances would have 
+# the vertical line and the two Label widgets inside them because it would define these rules for all Widget instances.
+
+# You will find that Kivy's design syntax is similar to normal CSS.
+
+<PongGame>:
+    # Canvas section in which you can add Graphics instructions that define how the widget is rendered.
+    canvas:
+        # We add a rectangle to the canvas
+        Rectangle:
+            # We set the pos of the rectangle to be 5 pixels left of the horizontal center of the widget (x), 
+            # and 0 for y (vertical)
+            pos: self.center_x - 5, 0
+            # The size of the rectangle is set to 10 pixels in width, and the widget’s height in height.
+            size: 10, self.height
+
+    # Adds a Label widget as a child widget to the PongGame widget (parent/root widget)       
+    Label:
+        font_size: 70
+        # The root keyword can be used inside the child block to refer back to the parent/root widget the rule applies  
+        center_x: root.width / 4
+        top: root.top - 50
+        text: "0"
+
+    Label:
+        font_size: 70  
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: "0"
+
+<PongBall>:
+     size: 50, 50
+     canvas:
+         Ellipse:
+             pos: self.pos
+             size: self.size

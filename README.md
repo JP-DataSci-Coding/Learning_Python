@@ -26,7 +26,9 @@ This repo contains general notes, exercises and projects written in Python.
 
 11. [Software Development Principles](#software-development-principles)
 
-12. [Projects](#projects)
+12. [Web Development Notes](#web-development-notes)
+
+13. [Projects](#projects)
 
 ### Basics
 
@@ -539,14 +541,48 @@ The benefits of using a super function are:
 
 ###### Multiple Inheritance
 
+We can also inherit from another child class. This is called **multilevel inheritance**. It can be of any depth in Python.
+
+In multilevel inheritance, features of the parent class and the child class are inherited into the new child class.
+
+```
 class Base1:
     pass
 
 class Base2:
     pass
 
-class MultiDerived(Base1, Base2):
+class MultiChild(Base1, Base2):
     pass
+```
+
+##### Encapsulation
+
+Using OOP in Python, we can restrict access to methods and variables. This prevents data from direct modification which is called encapsulation. In Python, we denote private attributes using underscore as the prefix i.e single _ or double __.
+
+```
+class Computer:
+
+    def __init__(self):
+        self.__maxprice = 900
+
+    def sell(self):
+        print("Selling Price: {}".format(self.__maxprice))
+
+    def setMaxPrice(self, price):
+        self.__maxprice = price
+
+c = Computer()
+c.sell()
+
+# change the price
+c.__maxprice = 1000
+c.sell()
+
+# using setter function
+c.setMaxPrice(1000)
+c.sell()
+```
 
 #### Creating a Class/Object in Python
 
@@ -591,6 +627,40 @@ class myClass:
 
 In OOP, a parent is one class, and a child is another class that inherits all of the attributes and functions assigned to the parent class.
 
+### Web Development Notes
+
+#### How Websites/Internet Work
+
+Web browsers and servers function together as a client-server system. Browsers are called clients because they request information/data from servers, which are basically machines that are capable of collecting and sending data over a network.
+
+A summary of the process of how the internet and websites work:
+
+1. User goes onto a website using a browser such as Google Chrome.
+
+2. The browser sends a **HTTP** request to the ISP, who relays that request to the **DNS** server, and finds the real address (**IP**) of the server that the website is hosted on.
+
+- HTTP is a protocol (rules/system) that defines a language for clients and servers to communicate with each other.
+
+- Domain Name Servers are like an address book for websites. When you type a normal web address (like google.com) in your browser, the browser looks at the DNS to find the website's IP address before it can retrieve the website. The browser needs to find out which server the website lives on, so it can send HTTP messages to the right place.
+
+3. The browser then sends an HTTP request message to the server, asking it to send a copy of the website to the client. This message, and all other data sent between the client and the server, is sent across your internet connection using TCP/IP.
+
+- Transmission Control Protocol and Internet Protocol or TCP/IP, are communication protocols that define how data should travel across the internet. 
+
+4. If the server approves the client's request, the server sends the client a "200 OK" message, which means 'Of course you can look at that website! Here it is', and then starts sending the website's files to the browser as a series of small chunks called data packets.
+
+5. Finally, the browser assembles the small chunks into a complete web page and displays it to the user.
+
+#### Intro To HTML, CSS and JavaScript
+
+**HTML** is markup language (language for annotating a document) and it used to define the structure of a web page. **CSS** is then used to design the look of the elements of the web page. **JavaScript** is used to give websites their behaviour/functionality, especially the front end.
+
+#### Content Delivery Networks (CDN)
+
+A CDN is a group of geographically distributed servers that speed up the delivery of web content by bringing it closer to where users are.
+
+So if we were to use the Bootstrap front-end framework using a CDN link, then Bootstrap will host their CSS files using the closest or most efficient route based on the user's request location. In other words, CDNs allow the browsers to download the Bootstrap CSS files as quick as possible, the browser will also cache the downloaded files to speed up page loads during the current session.
+
 ### Projects
 
 #### 1. TextPro App
@@ -606,6 +676,18 @@ A simple interactive web map that consists of three layers:
 - US volcano markers
 
 This project has been built using the **Folium** library. Python Folium allows us to combine data and Python programming with **Leaflet.js** (an open source JavaScript library used to build web mapping applications.) to build powerful, interactive web maps. 
+
+#### 3. Feel Good Mobile App
+
+Built with the **Kivy** library, an open source Python library for rapid development of applications
+that make use of innovative user interfaces, such as multi-touch apps. Kivy can be used to build **cross-platform** applications such as Linux, Windows, OS X, Android, iOS, and Raspberry Pi. You can run the same code on all supported platforms.
+
+Kivy also makes it easy to implement complex graphical user interfaces.
+
+#### 4. Web App
+
+First web app built using Python. 
+
 
 
 
